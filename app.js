@@ -6,9 +6,14 @@
 //
 // After users guess, load a new question.
 
+let data = null; //this is the answer, its set to null at the beg.
+
 function go(){
-  let button = document.querySelector("button");
+  let button = document.querySelector("#sub");
   button.addEventListener("click", init)
+
+  let showing = document.querySelector("#answer");
+  showing.addEventListener("click", show_Answer);
 }
 
 
@@ -33,7 +38,10 @@ function init() {
       console.log("Value: " + response[0].value);
       console.log("Answer: " + response[0].answer);
 
+      data = response[0].answer;
+
       show(response[0]);
+      // show_Answer(response[0]);
 
     })
 
@@ -47,7 +55,6 @@ function show(stuff){
   let category = document.querySelector("h3");
   let question = document.querySelector("h2");
   let points = document.querySelector("h4");
-  let ans = document.querySelector("h6");
 
   category.textContent = "The category is: " + stuff.category.title;
 
@@ -55,9 +62,11 @@ function show(stuff){
 
   points.textContent = "The value of this answer is: " + stuff.value;
 
-  ans.textContent = "The answer is: " + stuff.answer;
+}
 
-
+function show_Answer(){
+  let ans = document.querySelector("h6");
+  ans.textContent = "The answer is: " + data;
 }
 
 window.addEventListener('load', go);
